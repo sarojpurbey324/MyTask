@@ -26,7 +26,6 @@ public class DealDataController {
     @PostMapping("/save-data")
     public ResponseEntity<?> saveDealData(@Valid @RequestBody DealRequestDTO dealDataDTO) {
         LOGGER.info("Receiving request at endpoint /save-data");
-        dealService.saveDealData(dealDataDTO);
         return new ResponseEntity<>(dealService.saveDealData(dealDataDTO), HttpStatus.OK);
 
     }
@@ -34,7 +33,6 @@ public class DealDataController {
     @PostMapping("/save-all-data")
     public ResponseEntity<?> saveDealData(@Valid @RequestBody List<DealRequestDTO> dealDataDTO) {
         LOGGER.info("Receiving request at endpoint /save-all-data");
-        dealService.saveAllDealData(dealDataDTO);
         return new ResponseEntity<>(dealService.saveAllDealData(dealDataDTO), HttpStatus.OK);
     }
 
