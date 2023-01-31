@@ -1,6 +1,7 @@
 package com.clusus.task.service;
 
 import com.clusus.task.model.dto.DealRequestDTO;
+import com.clusus.task.model.entity.DealDataEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,8 +9,8 @@ import java.util.List;
 @Service
 public interface DealService {
 
-    void saveDealData(DealRequestDTO dealRequestDTO);
+    DealDataEntity saveDealData(DealRequestDTO dealRequestDTO);
 
-    void saveAllDealData(List<DealRequestDTO> dealRequestDataList);
+    List<DealDataEntity> saveAllDealData(List<DealRequestDTO> dealRequestDataList);
 
 }

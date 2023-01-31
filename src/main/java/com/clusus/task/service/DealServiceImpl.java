@@ -22,7 +22,7 @@ public class DealServiceImpl implements DealService {
 
     @Override
     @Transactional
-    public void saveDealData(DealRequestDTO dealRequestDTO) {
+    public DealDataEntity saveDealData(DealRequestDTO dealRequestDTO) {
         LOGGER.info("Saving single deal data");
         DealDataEntity dealDataEntity = new DealDataEntity();
         dealDataEntity.setDealUniqueId(dealRequestDTO.getDealId());
@@ -33,13 +33,13 @@ public class DealServiceImpl implements DealService {
         if (dealRepository.existsByDealUniqueId(dealRequestDTO.getDealId())) {
             throw new RuntimeException(" Data with this deal id "+ dealRequestDTO.getDealId() +" already exists");
         } else {
-            dealRepository.save(dealDataEntity);
+            return dealRepository.save(dealDataEntity);
         }
     }
 
     @Override
     @Transactional(rollbackOn = {})
-    public void saveAllDealData(List<DealRequestDTO> dealRequestDataList) {
+    public List<DealDataEntity> saveAllDealData(List<DealRequestDTO> dealRequestDataList) {
         LOGGER.info("Saving list of deal data");
         List<DealDataEntity> dealDataList = new ArrayList<>();
         for (DealRequestDTO dealRequestData : dealRequestDataList) {
@@ -51,6 +51,6 @@ public class DealServiceImpl implements DealService {
             dealDataEntity.setDealAmount(dealRequestData.getDealAmount());
             dealDataList.add(dealDataEntity);
         }
-        dealRepository.saveAll(dealDataList);
+        return dealRepository.saveAll(dealDataList);
     }
 }
