@@ -31,7 +31,7 @@ public class DealServiceImpl implements DealService {
         dealDataEntity.setDealTimestamp(dealRequestDTO.getDealTimestamp());
         dealDataEntity.setDealAmount(dealRequestDTO.getDealAmount());
         if (dealRepository.existsByDealUniqueId(dealRequestDTO.getDealId())) {
-            throw new RuntimeException(" Data with this deal id already exists");
+            throw new RuntimeException(" Data with this deal id "+ dealRequestDTO.getDealId() +" already exists");
         } else {
             dealRepository.save(dealDataEntity);
         }
