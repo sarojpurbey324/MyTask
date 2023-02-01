@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -31,4 +32,15 @@ public class DealRequestDTO {
     @Positive
     private BigDecimal dealAmount;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DealRequestDTO that)) return false;
+        return getDealId() == that.getDealId() && getFromCurrencyIsoCode().equals(that.getFromCurrencyIsoCode()) && getToCurrencyIsoCode().equals(that.getToCurrencyIsoCode()) && getDealTimestamp().equals(that.getDealTimestamp()) && getDealAmount().equals(that.getDealAmount());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getDealId(), getFromCurrencyIsoCode(), getToCurrencyIsoCode(), getDealTimestamp(), getDealAmount());
+    }
 }

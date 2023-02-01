@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class DealServiceImpl implements DealService {
@@ -41,8 +43,9 @@ public class DealServiceImpl implements DealService {
     @Transactional(rollbackOn = {})
     public List<DealDataEntity> saveAllDealData(List<DealRequestDTO> dealRequestDataList) {
         LOGGER.info("Saving list of deal data");
+        List< DealRequestDTO > filteringDuplicateData = getNonDuplicateData( dealRequestDataList );
         List<DealDataEntity> dealDataList = new ArrayList<>();
-        for (DealRequestDTO dealRequestData : dealRequestDataList) {
+        for (DealRequestDTO dealRequestData : filteringDuplicateData) {
             DealDataEntity dealDataEntity = new DealDataEntity();
             dealDataEntity.setDealUniqueId(dealRequestData.getDealId());
             dealDataEntity.setFromCurrencyISOCode(dealRequestData.getFromCurrencyIsoCode());
@@ -51,6 +54,12 @@ public class DealServiceImpl implements DealService {
             dealDataEntity.setDealAmount(dealRequestData.getDealAmount());
             dealDataList.add(dealDataEntity);
         }
+
         return dealRepository.saveAll(dealDataList);
+    }
+
+    public List< DealRequestDTO > getNonDuplicateData( List< DealRequestDTO > membersFromFile ) {
+        Set<DealRequestDTO> members = new HashSet<>(membersFromFile);
+        return new ArrayList<>(members);
     }
 }
