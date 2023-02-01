@@ -58,8 +58,8 @@ public class DealServiceImpl implements DealService {
         return dealRepository.saveAll(dealDataList);
     }
 
-    public List< DealRequestDTO > getNonDuplicateData( List< DealRequestDTO > membersFromFile ) {
-        Set<DealRequestDTO> members = new HashSet<>(membersFromFile);
-        return new ArrayList<>(members);
+    public List< DealRequestDTO > getNonDuplicateData( List< DealRequestDTO > dealRequestDTOList ) {
+        Set<DealRequestDTO> filteredData = new HashSet<>(dealRequestDTOList);
+        return new ArrayList<>(filteredData);
     }
 }
